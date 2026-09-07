@@ -21,3 +21,5 @@ linux-system-monitor/
 │   └── system_monitor.log 
 ├── .gitignore             # Prevents logs from being committed
 └── README.md              # Project documentation
+## ⚙️ Setup & Installation
+1. Clone or download the repository:
