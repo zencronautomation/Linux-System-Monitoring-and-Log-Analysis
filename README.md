@@ -4,7 +4,7 @@
 [![Linux](https://img.shields.io/badge/Linux-Debian/Ubuntu-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://www.debian.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-A robust, Bash-based Linux monitoring system designed to collect system metrics, write timestamped logs, enforce configurable thresholds, and assist with basic log analysis. Built to prevent silent VM[...] 
+A robust, Bash-based Linux monitoring system designed to collect system metrics, write timestamped logs, enforce configurable thresholds, and assist with basic log analysis. Built to prevent silent failures and ensure system reliability.
 
 ---
 
@@ -53,13 +53,14 @@ Example values in `config.env.example` (see file in repo).
 
 📊 Log Analysis Workflow
 Use these standard Linux commands to analyze system health and troubleshoot issues based on the generated logs:
-See the pinned quick-commands file for these shortcuts:
-- table-d3e6a728-8685-4f0b-b4cd-0bfb686d2545.csv
-  https://github.com/zencronautomation/Linux-System-Monitoring-and-Log-Analysis/blob/main/table-d3e6a728-8685-4f0b-b4cd-0bfb686d2545.csv
 
-Troubleshooting table:
-- table-d3e6a728-8685-4f0b-b4cd-0bfb686d2545 (1).csv
-  https://github.com/zencronautomation/Linux-System-Monitoring-and-Log-Analysis/blob/main/table-d3e6a728-8685-4f0b-b4cd-0bfb686d2545%20(1).csv
+| Goal | Command |
+|------|---------|
+| View live log updates | `tail -f logs/system_monitor.log` |
+| Find triggered warnings | `grep -i 'warning' logs/system_monitor.log` |
+| Find specific errors | `grep -i 'error' logs/system_monitor.log` |
+| Check system journal (last hour) | `journalctl --since 'i hour ago'` |
+| Check system journal (warnings only) | `journalctl -p warning -n 30 --no-pager` |
 
 Analysis Best Practices:
 - Look for repeated warnings in the log file.
@@ -89,8 +90,14 @@ crontab -l
 ```
 
 🧪 Testing & Troubleshooting
-See the troubleshooting CSV in the repository for common issues:
-https://github.com/zencronautomation/Linux-System-Monitoring-and-Log-Analysis/blob/main/table-d3e6a728-8685-4f0b-b4cd-0bfb686d2545%20(1).csv
+
+| Issue | Solution |
+|-------|----------|
+| Permission denied | Run `chmod +x system_monitor.sh` |
+| No journal output | Run `journalctl -p warning -n 30 --no-pager` to verify systemd logging is active. |
+| Log not created | Verify `config.env` exists and check directory permissions: `ls -ld ~/linux-system-monitor/logs` |
+| CPU parsing differs | Linux distributions format `top` differently. This script uses `vmstat` for reliable parsing, but inspect `top -bn1` and adjust the `awk` expression if using a highly customized distro. |
+| Test a Warning | Temporarily lower `CPU_THRESHOLD-1` in `config.env`, run `./system_monitor.sh`, and verify the WARNING appears in the log. |
 
 🔗 Source Code
 To keep this documentation clean and readable, the full Bash script is not embedded here. You can view, download, or audit the complete source code directly in the repository:
