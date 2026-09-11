@@ -2,7 +2,6 @@
 
 [![Bash](https://img.shields.io/badge/Bash-Script-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
 [![Linux](https://img.shields.io/badge/Linux-Debian/Ubuntu-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://www.debian.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 A robust, Bash-based Linux monitoring system designed to collect system metrics, write timestamped logs, enforce configurable thresholds, and assist with basic log analysis. Built to prevent silent failures and ensure system reliability.
 
